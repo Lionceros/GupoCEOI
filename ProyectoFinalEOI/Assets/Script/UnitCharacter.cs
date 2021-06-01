@@ -13,6 +13,7 @@ public abstract class UnitCharacter : MonoBehaviour
     public int criticalDamageUnit; //Daño critico
     public float movementSpeedUnit; //Velocidad movimiento de la unidad
     public float unitRealSpeedUnit; // Para almacenar la movementSpeedUnit
+    public float IdUnit; // La id de las unidades, Warriot= 1, Archer = 2, etc
 
     public int faction; //  SE CAMBIA EN EL INSPECTOR. Numero de la faccion 1= Ally / 2 = Enemy. Evita algunos problemas como que detecte otros colliders fuera de las unidades como enemigos o aliados
     
@@ -30,17 +31,14 @@ public abstract class UnitCharacter : MonoBehaviour
     public string isAllyTag = "Ally";
     public string isEnemyTag = "Enemy";
 
+    public Vector2 attackDisplacement = new Vector2(0, 0);
+    public float attackRadius = 1F;
+
     private void Awake()
     {
         circleCol = GetComponent<CircleCollider2D>();
         boxCol = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
-    }
-
-    // virtual = Permite que se pueda sobreescribir por los hijos (Warrior, Archer, etc)
-    protected virtual void OnTriggerStay2D(Collider2D collision)
-    {
-        UnitCharacter unit = collision.gameObject.GetComponent<UnitCharacter>();
     }
 
     public void MovementUnitAndLayer() //Mueve las unidades segun si son enemigas o aliadas, Se instancia en los scripts de las unidades
@@ -75,11 +73,6 @@ public abstract class UnitCharacter : MonoBehaviour
         if (timeActual - timeSeconds >= 1f)
         {
             timeSeconds = timeActual;
-
-            if (unit != null && faction != unit.faction && isRangedUnit) // Si es de larga distancia, la unidad se para para atacar
-            {
-                movementSpeedUnit = 0f;
-            }
 
             if (unit != null && faction != unit.faction) // Si la unidad no es nula y NO es de nuestra faccion
             {
@@ -128,5 +121,33 @@ public abstract class UnitCharacter : MonoBehaviour
     public int RandomNumber(int min, int max)
     {
         return Random.Range(min, max);
+    }
+
+    public void CheckEnemiesInRange()
+    {
+        Vector2 d = attackDisplacement;
+        int enemyLayer = gameObject.layer == 8 ? 9 : 8;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position + new Vector3(d.x, d.y, 0f), attackRadius, 1 << enemyLayer);
+        foreach (Collider2D collider in colliders)
+        {
+            if (!collider.isTrigger)
+            {
+                // Comprobar si es una unidad
+                UnitCharacter enemy = collider.GetComponent<UnitCharacter>();
+                if (enemy && enemy != this)
+                {
+                    movementSpeedUnit = 0f;
+                    enemy.TimeToAttack(this);
+                }
+
+            }
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Vector2 d = attackDisplacement;
+        Gizmos.DrawWireSphere(transform.position + new Vector3(d.x, d.y, 0F), attackRadius);
     }
 }

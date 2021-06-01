@@ -125,14 +125,19 @@ MonoBehaviour:
   healthUnit: 0
   damageUnit: 0
   rangeUnit: 0
-  attackSpeedUnit: 0
+  timesUnitAttackEverySecond: 0
   secondsToAttack: 0
   criticalDamageUnit: 0
   movementSpeedUnit: 0
+  unitRealSpeedUnit: 0
   faction: 2
   isTower: 0
   isRangedUnit: 0
   isMeleeUnit: 0
+  timeSeconds: 0
+  timeActual: 0
+  isAllyTag: Ally
+  isEnemyTag: Enemy
 --- !u!70 &3299092959596498561
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -146,6 +151,6 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.2, y: 0.2}
+  m_Offset: {x: -0.1, y: 0}
+  m_Size: {x: 0.5, y: 0.2}
   m_Direction: 0

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 732141874431180338}
   - component: {fileID: 732141874431180339}
   - component: {fileID: 732141874431180348}
-  - component: {fileID: 732141874431180351}
+  - component: {fileID: 653426378}
   m_Layer: 0
   m_Name: AllyTower
   m_TagString: Untagged
@@ -125,15 +125,20 @@ MonoBehaviour:
   healthUnit: 0
   damageUnit: 0
   rangeUnit: 0
-  attackSpeedUnit: 0
+  timesUnitAttackEverySecond: 0
   secondsToAttack: 0
   criticalDamageUnit: 0
   movementSpeedUnit: 0
+  unitRealSpeedUnit: 0
   faction: 1
   isTower: 0
   isRangedUnit: 0
   isMeleeUnit: 0
---- !u!70 &732141874431180351
+  timeSeconds: 0
+  timeActual: 0
+  isAllyTag: Ally
+  isEnemyTag: Enemy
+--- !u!70 &653426378
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,6 +151,6 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.2, y: 0.2}
+  m_Offset: {x: 0.1, y: 0}
+  m_Size: {x: 0.5, y: 0.2}
   m_Direction: 0

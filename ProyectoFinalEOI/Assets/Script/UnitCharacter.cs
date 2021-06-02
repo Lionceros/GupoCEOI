@@ -34,6 +34,8 @@ public abstract class UnitCharacter : MonoBehaviour
     public Vector2 attackDisplacement = new Vector2(0, 0);
     public float attackRadius = 1F;
 
+    public Animator animator;
+
     private void Awake()
     {
         circleCol = GetComponent<CircleCollider2D>();
@@ -69,6 +71,7 @@ public abstract class UnitCharacter : MonoBehaviour
 
     public void TimeToAttack(UnitCharacter unit)
     {
+        animator.SetBool("Attack", true);
         timeActual += Time.fixedDeltaTime;
         if (timeActual - timeSeconds >= 1f)
         {
@@ -93,7 +96,9 @@ public abstract class UnitCharacter : MonoBehaviour
     {
         if (unit.healthUnit <= 0) // Se le resta a la vida de la unidad contraria nuestro daño
         {
-            Destroy(unit.gameObject);
+            unit.animator.SetBool("Die", true);
+
+            Destroy(unit.gameObject, 2f);
         }
     }
 

@@ -9,9 +9,10 @@ public class Tower : UnitCharacter
         healthUnit = 100;
         damageUnit = 5;
         timesUnitAttackEverySecond = 1;
-        secondsToAttack = 5;
+        secondsToAttack = 1;
         movementSpeedUnit = 0f;
         unitRealSpeedUnit = movementSpeedUnit;
+        isTower = true;
 
         IsRangedOrMeleeUnit();
     }

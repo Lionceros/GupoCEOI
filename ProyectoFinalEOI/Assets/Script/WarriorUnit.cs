@@ -7,7 +7,7 @@ public class WarriorUnit : UnitCharacter
     private void Start()
     {
         healthUnit = 20;
-        damageUnit = 1;
+        damageUnit = 2;
         timesUnitAttackEverySecond = 1;
         secondsToAttack = 5;
         movementSpeedUnit = 1f;
@@ -21,6 +21,7 @@ public class WarriorUnit : UnitCharacter
     {
         MovementUnitAndLayer();
         movementSpeedUnit = unitRealSpeedUnit;
+        animator.SetBool("Attack", false);
         CheckEnemiesInRange();
     }
 }

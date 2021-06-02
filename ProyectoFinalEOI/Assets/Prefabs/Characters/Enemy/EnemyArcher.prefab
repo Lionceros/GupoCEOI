@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8627180372569522927}
   - component: {fileID: 8627180372569522920}
   - component: {fileID: 8627180372569522922}
+  - component: {fileID: -887000070520430725}
   m_Layer: 0
   m_Name: EnemyArcher
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8627180372569522923}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.01, y: 3.52, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -162,3 +163,23 @@ MonoBehaviour:
   isEnemyTag: Enemy
   attackDisplacement: {x: -1.5, y: 0}
   attackRadius: 0.82
+  animator: {fileID: -887000070520430725}
+--- !u!95 &-887000070520430725
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8627180372569522923}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c5be8218c72959e4ea248a2e78b8499a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

@@ -43,3 +43,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Tower
+    uniqueID: 853377051
+    locked: 0
+  - name: Kings
+    uniqueID: 73309313
+    locked: 0
+  - name: Path
+    uniqueID: 917152079
+    locked: 0
+  - name: Units
+    uniqueID: 3236182387
+    locked: 0
+  - name: Background
+    uniqueID: 3641811483
+    locked: 0

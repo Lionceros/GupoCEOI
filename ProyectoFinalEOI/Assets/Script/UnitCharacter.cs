@@ -21,7 +21,6 @@ public abstract class UnitCharacter : MonoBehaviour
     public bool isRangedUnit; //Es una unidad a distancia
     public bool isMeleeUnit; //Es una unidad a corta distancia
     
-    protected CircleCollider2D circleCol;
     protected BoxCollider2D boxCol;
     protected Rigidbody2D rb;
 
@@ -36,9 +35,11 @@ public abstract class UnitCharacter : MonoBehaviour
 
     public Animator animator;
 
-    private void Awake()
+    //public SpriteRenderer spriteR;
+    //public int sortingOrder;
+
+    public void Awake()
     {
-        circleCol = GetComponent<CircleCollider2D>();
         boxCol = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -96,9 +97,18 @@ public abstract class UnitCharacter : MonoBehaviour
     {
         if (unit.healthUnit <= 0) // Se le resta a la vida de la unidad contraria nuestro daño
         {
+            
             unit.animator.SetBool("Die", true);
+            if (!isTower)
+            {
+                unit.rb.isKinematic = true;
+                unit.boxCol.enabled = false;
+            }
 
             Destroy(unit.gameObject, 2f);
+            if (isTower)
+            {
+            }
         }
     }
 
@@ -155,4 +165,10 @@ public abstract class UnitCharacter : MonoBehaviour
         Vector2 d = attackDisplacement;
         Gizmos.DrawWireSphere(transform.position + new Vector3(d.x, d.y, 0F), attackRadius);
     }
+
+    //public void SortingOrder()
+    //{
+    //    sortingOrder -= 1;
+    //    spriteR.sortingOrder = sortingOrder;
+    //}
 }

@@ -20,6 +20,7 @@ public class AudioSliders : MonoBehaviour
     [SerializeField]
     private Text volumeLabel;
 
+    public GameObject MenuAudio;
     private void Start()
     {
         UpdateValueOnChange(slider.value);
@@ -40,4 +41,5 @@ public class AudioSliders : MonoBehaviour
             volumeLabel.text = Mathf.Round(value * 100.0f).ToString() + "%";
         }
     }
+     
 }

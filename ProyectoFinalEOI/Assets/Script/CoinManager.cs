@@ -6,7 +6,7 @@ using TMPro;
 
 public class CoinManager : MonoBehaviour
 {
-    UiManager uiManager;
+    public UiManager uiManager;
 
     [Header("Units Prices")]
     public int warriorPrice;
@@ -74,13 +74,21 @@ public class CoinManager : MonoBehaviour
 
     public void CoinPerSecondAlly()
     {
-        timeActual += Time.deltaTime;
-        if (timeActual - timeSeconds >= 1f)
+        if (uiManager.allyTower.towerIsDead)
         {
-            timeSeconds = timeActual;
-            int temp = coinsAlly += coinsEverySecond;
-            coinVariable.text = coinsAlly.ToString();
+
         }
+        else
+        {
+            timeActual += Time.deltaTime;
+            if (timeActual - timeSeconds >= 1f)
+            {
+                timeSeconds = timeActual;
+                int temp = coinsAlly += coinsEverySecond;
+                coinVariable.text = coinsAlly.ToString();
+            }
+        }
+        
     }
     public void CoinPerSecondEnemy()
     {

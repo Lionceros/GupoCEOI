@@ -6,16 +6,17 @@ public class WarriorUnit : UnitCharacter
 {
     private void Start()
     {
-        healthUnit = 5;
-        damageUnit = 1;
+        healthUnit = 100;
+        damageUnit = 20;
         timesUnitAttackEverySecond = 1;
         secondsToAttack = 5;
         movementSpeedUnit = 7f;
         unitRealSpeedUnit = movementSpeedUnit;
-        isRangedUnit = true;
+        isMeleeUnit = true;
 
         // coinsToInvoke = 10; Modificar en CoinsManager!
         coinsWhenDie = 5;
+        pointsWhenDie = 5;
     }
 
     // Update is called once per frame

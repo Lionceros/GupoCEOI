@@ -6,13 +6,15 @@ public class Tower : UnitCharacter
 {
     private void Start()
     {
-        healthUnit = 10;
-        damageUnit = 5;
+        healthUnit = 500;
+        damageUnit = 30;
         timesUnitAttackEverySecond = 1;
         secondsToAttack = 1;
         movementSpeedUnit = 0f;
         unitRealSpeedUnit = movementSpeedUnit;
         isTower = true;
+
+        pointsWhenDie = 100;
     }
 
     // Update is called once per frame

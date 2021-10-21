@@ -7,7 +7,7 @@ using TMPro;
 
 [RequireComponent(typeof(Slider))]
 public class AudioSliders : MonoBehaviour {
-    Slider slider
+    public Slider slider
     {
         get { return GetComponent<Slider>(); }
     }
@@ -15,24 +15,29 @@ public class AudioSliders : MonoBehaviour {
     [SerializeField]
     private AudioMixer mixer;
 
-    [SerializeField]
-    private string volumeName;
+    public string volumeName;
     [SerializeField]
     private TextMeshProUGUI volumeLabel;
 
-
+    
     //public GameObject MenuAudio;
-    private void Start()
+    private void OnEnable()
     {
-        UpdateValueOnChange(slider.value);
 
-        slider.onValueChanged.AddListener(delegate { UpdateValueOnChange(slider.value); });
+
+        LoadSound();
+        
+
+        slider.onValueChanged.AddListener(UpdateValueOnChange);
 
     }
     public void UpdateValueOnChange(float value)
     {
+        PlayerPrefs.SetFloat(volumeName, value);
+
         if (mixer != null)
         {
+            Debug.Log(value);
             mixer.SetFloat(volumeName, Mathf.Log(value) * 20f);
 
         }
@@ -40,12 +45,28 @@ public class AudioSliders : MonoBehaviour {
         {
             volumeLabel.text = Mathf.Round(value * 100.0f).ToString() + "%";
         }
-
     }
 
-    public void SaveChanges()
-    {
+    //public void SaveChanges()
+    //{
+    //    PlayerPrefs.Save();
+    //}
 
+    private void OnDisable()
+    {
+        slider.onValueChanged.RemoveListener(UpdateValueOnChange);
+    }
+
+    public void LoadSound()
+    {
+        if (PlayerPrefs.HasKey(volumeName))
+        {
+
+            slider.value = PlayerPrefs.GetFloat(volumeName);
+            Debug.Log(volumeName + ": " + slider.value);
+        }
+
+        UpdateValueOnChange(slider.value);
     }
 
 }

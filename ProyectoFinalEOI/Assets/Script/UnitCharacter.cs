@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public abstract class UnitCharacter : MonoBehaviour
 {
+    public static Action<UnitCharacter> onUnitDies;
+
     [Header("Unit Stats")]
     public int healthUnit; //Vida de la unidad
     public int damageUnit; //Daño que hace la unidad
@@ -32,6 +35,7 @@ public abstract class UnitCharacter : MonoBehaviour
     [Header("Coins Unit Give When Dead")]
     // public int coinsToInvoke; //Las monedas que cuesta invocarlo
     public int coinsWhenDie; //Las monedas que da al morir
+    public int pointsWhenDie;
 
     [Header("Attack Range")]
     public Vector2 attackDisplacement = new Vector2(0, 0);
@@ -118,8 +122,6 @@ public abstract class UnitCharacter : MonoBehaviour
 
         animator.SetBool("Attack", true);
         unit.animator.SetBool("Attack", true);
-        sfxAttack.Play();
-        unit.sfxAttack.Play();
 
         timeActual += Time.deltaTime;
         if (timeActual - timeSeconds >= 1f)
@@ -128,8 +130,11 @@ public abstract class UnitCharacter : MonoBehaviour
 
             if (unit != null && faction != unit.faction) // Si la unidad no es nula y NO es de nuestra faccion
             {
-                
+                sfxAttack.Play();
+                unit.sfxAttack.Play();
+
                 Damage(unit);
+                
                 IsUnitDead(unit);
             }
         }
@@ -146,28 +151,34 @@ public abstract class UnitCharacter : MonoBehaviour
 
     public void CriticalDamage() // Calcula el daño crítico
     {
-        int criticalDamageTemp = RandomNumber(1, 4);
-        if (criticalDamageTemp == 3)
+        int criticalDamageTemp = 0;
+
+        if (criticalDamageTemp == 0)
+
         {
-            criticalDamageTemp = RandomNumber(1, 6);
-            if (criticalDamageTemp == 5)
-            {
-                criticalDamageUnit = 3;
-            }
-            else
+            criticalDamageTemp = RandomNumber(0, 10);
+            if (criticalDamageTemp == 2 || criticalDamageTemp == 4 || criticalDamageTemp == 6)
             {
                 criticalDamageUnit = 2;
             }
-        }
-        else
-        {
-            criticalDamageUnit = 1;
+            else if (criticalDamageTemp == 3)
+            {
+                criticalDamageUnit = 3;
+            }
+            else if (criticalDamageTemp == 0)
+            {
+                criticalDamageUnit = 0;
+            }
+            else
+            {
+                criticalDamageUnit = 1;
+            }
         }
     }
 
     public int RandomNumber(int min, int max)
     {
-        return Random.Range(min, max);
+        return UnityEngine.Random.Range(min, max);
     }
 
     public void IsUnitDead(UnitCharacter unit)
@@ -193,6 +204,11 @@ public abstract class UnitCharacter : MonoBehaviour
                 unit.boxCol.enabled = false;
                 
                 unit.sfxDead.Play();
+
+                if (onUnitDies != null)
+                {
+                    onUnitDies(unit);
+                }
 
                 Destroy(unit.gameObject, 2f);
             }

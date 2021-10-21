@@ -6,8 +6,8 @@ public class MageUnit : UnitCharacter
 {
     private void Start()
     {
-        healthUnit = 2;
-        damageUnit = 3;
+        healthUnit = 60;
+        damageUnit = 40;
         timesUnitAttackEverySecond = 1;
         secondsToAttack = 5;
         movementSpeedUnit = 7f;
@@ -16,6 +16,7 @@ public class MageUnit : UnitCharacter
 
         // coinsToInvoke = 10; Modificar en CoinsManager!
         coinsWhenDie = 5;
+        pointsWhenDie = 5;
     }
 
     // Update is called once per frame

@@ -15,9 +15,7 @@ public class SceneController : MonoBehaviour
 
     public void Replay()
     {
-        uiManager.RestartTime();
         SceneManager.LoadScene("StartMenu");
-        
     }
 
     public void QuitGame()

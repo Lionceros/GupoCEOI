@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9bc3309afcbbad449067262aff7d395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 0}
   warriorPrice: 10
   archerPrice: 10
   roguePrice: 20
@@ -54,7 +55,7 @@ MonoBehaviour:
   allyTower: {fileID: 0}
   enemyTower: {fileID: 0}
   coinsOnStart: 20
-  coinsEverySecond: 5
+  coinsEverySecond: 1
   coinVariable: {fileID: 0}
   coinsAlly: 0
   coinsEnemy: 0

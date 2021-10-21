@@ -61,23 +61,36 @@ public class UiManager : MonoBehaviour {
     [Header("CoinManager")]
     public CoinManager coinManager;
 
+    [Header("Points Text")]
+    public TextMeshProUGUI pointsVariables;
+    private int allPoints;
+
     [Header("Crono Text")]
     public TextMeshProUGUI timerText;
 
+    [Header("Life Text")]
+    public TextMeshProUGUI allyTowerLife;
+    public TextMeshProUGUI enemyTowerLife;
+
     private bool isGameOver;
     private bool isVictory;
+
+    public string prueba;
 
     float time;
 
     private void Awake()
     {
         StartMenu();
+
+        UnitCharacter.onUnitDies += GiveCoinFromDeadUnit;
     }
     private void Start()
     {
+        prueba = "";
         isGameOver = true;
         isVictory = true;
-        timeStart = 0f;
+        timeStart = Time.time;
     }
 
     // Update is called once per frame
@@ -87,6 +100,7 @@ public class UiManager : MonoBehaviour {
         GameOver();
         Victory();
         Chrono();
+        AllyTowerLife();
     }
 
 
@@ -158,7 +172,6 @@ public class UiManager : MonoBehaviour {
         if (coinManager.coinsEnemy >= coinManager.warriorPrice)
         {
             int temp = coinManager.coinsEnemy -= coinManager.warriorPrice;
-            coinManager.coinVariable.text = temp.ToString();
 
             InvokeEnemy(random);
         }
@@ -169,7 +182,6 @@ public class UiManager : MonoBehaviour {
         if (coinManager.coinsEnemy >= coinManager.archerPrice)
         {
             int temp = coinManager.coinsEnemy -= coinManager.archerPrice;
-            coinManager.coinVariable.text = temp.ToString();
 
             InvokeEnemy(random);
         }
@@ -180,7 +192,7 @@ public class UiManager : MonoBehaviour {
         if (coinManager.coinsEnemy >= coinManager.roguePrice)
         {
             int temp = coinManager.coinsEnemy -= coinManager.roguePrice;
-            coinManager.coinVariable.text = temp.ToString();
+            
 
             InvokeEnemy(random);
         }
@@ -191,7 +203,7 @@ public class UiManager : MonoBehaviour {
         if (coinManager.coinsEnemy >= coinManager.magePrice)
         {
             int temp = coinManager.coinsEnemy -= coinManager.magePrice;
-            coinManager.coinVariable.text = temp.ToString();
+            
 
             InvokeEnemy(random);
         }
@@ -215,6 +227,7 @@ public class UiManager : MonoBehaviour {
                 gameOverMusic.Play();
                 enemyTower.animator.SetBool("Win", true);
                 gameOver.SetActive(true);
+               
             }
             isGameOver = false;
         }
@@ -225,6 +238,8 @@ public class UiManager : MonoBehaviour {
         {
             if (isVictory == true)
             {
+                allPoints += allyTower.pointsWhenDie;
+                pointsVariables.text = allPoints.ToString();
                 mainMusic.Stop();
                 victoryMusic.Play();
                 allyTower.animator.SetBool("Win", true);
@@ -244,12 +259,8 @@ public class UiManager : MonoBehaviour {
         miliseconds = ((int)(time * 100) % 100);
 
         timerText.text = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, miliseconds);
+        prueba = timerText.text;
 
-    }
-
-    public void RestartTime()
-    {
-        time = Time.time - Time.time;
     }
 
     /// Invoke Ally functions
@@ -259,17 +270,17 @@ public class UiManager : MonoBehaviour {
         if (coinManager.coinsAlly >= coinManager.warriorPrice)
         {
             int temp = coinManager.coinsAlly -= coinManager.warriorPrice;
-            coinManager.coinVariable.text = temp.ToString();
             InvokeAlly(0);
         }
 
     }
+
     public void InvokeAllyArcher()
     {
         if (coinManager.coinsAlly >= coinManager.archerPrice)
         {
             int temp = coinManager.coinsAlly -= coinManager.archerPrice;
-            coinManager.coinVariable.text = temp.ToString();
+            //coinManager.coinVariable.text = temp.ToString();
             InvokeAlly(1);
         }
     }
@@ -279,7 +290,7 @@ public class UiManager : MonoBehaviour {
         if (coinManager.coinsAlly >= coinManager.roguePrice)
         {
             int temp = coinManager.coinsAlly -= coinManager.roguePrice;
-            coinManager.coinVariable.text = temp.ToString();
+            //coinManager.coinVariable.text = temp.ToString();
             InvokeAlly(2);
         }
     }
@@ -289,7 +300,7 @@ public class UiManager : MonoBehaviour {
         if (coinManager.coinsAlly >= coinManager.magePrice)
         {
             int temp = coinManager.coinsAlly -= coinManager.magePrice;
-            coinManager.coinVariable.text = temp.ToString();
+            //coinManager.coinVariable.text = temp.ToString();
             InvokeAlly(3);
         }
     }
@@ -304,7 +315,6 @@ public class UiManager : MonoBehaviour {
             UnitCharacter temp = Instantiate(prefabsAlly[idPrefab], invokeAlly.transform);
             UnitCharacter unit = temp.GetComponent<UnitCharacter>();
             unit.SortingOrder();
-            GiveCoinFromDeadUnit(unit);
         }
 
     }
@@ -315,9 +325,20 @@ public class UiManager : MonoBehaviour {
     {
         if (unit.unitIsDead)
         {
-            Debug.Log("Unidad muerta");
-            int temp = coinManager.coinsAlly += unit.coinsWhenDie;
-            coinManager.coinVariable.text = temp.ToString();
+            if (unit.faction == 1)
+            {
+                coinManager.coinsEnemy += unit.coinsWhenDie;
+                
+                
+
+            }
+            else if (unit.faction == 2)
+            {
+                int temp = coinManager.coinsAlly += unit.coinsWhenDie;
+
+                allPoints += unit.pointsWhenDie;
+                pointsVariables.text = allPoints.ToString();
+            }
         }
 
     }
@@ -367,4 +388,16 @@ public class UiManager : MonoBehaviour {
         mainMusic.Stop();
         victoryMusic.Stop();
     }
+
+    public void OnDestroy()
+    {
+        UnitCharacter.onUnitDies -= GiveCoinFromDeadUnit;
+    }
+
+    public void AllyTowerLife()
+    {
+        allyTowerLife.text = allyTower.healthUnit.ToString();
+        enemyTowerLife.text = enemyTower.healthUnit.ToString();
+    }
+
 }

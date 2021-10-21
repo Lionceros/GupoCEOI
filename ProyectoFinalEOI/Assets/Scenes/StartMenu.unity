@@ -461,7 +461,7 @@ PrefabInstance:
       objectReference: {fileID: 1318063475}
     - target: {fileID: 6311253445607849477, guid: 75fbe3bcdc5cfa041bbdf7762999287b,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1318063475}
     - target: {fileID: 6311253447014941112, guid: 75fbe3bcdc5cfa041bbdf7762999287b,
@@ -579,14 +579,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 6885856178212412449, guid: 75fbe3bcdc5cfa041bbdf7762999287b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7049826626280061389, guid: 75fbe3bcdc5cfa041bbdf7762999287b,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1318063475}
     m_RemovedComponents: []
